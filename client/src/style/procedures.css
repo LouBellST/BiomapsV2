@@ -1,0 +1,51 @@
+.containerProcedures{
+	width: 100%;
+	height: 100%;
+}
+
+.procedures{
+	width: 80%;
+	height: 100%;
+	margin: 0 auto;
+	padding-top: 11%;
+	color: #fff;
+}
+
+#demo-customized-button{
+	color: #fff;
+	border-color: #fff;
+	width: 150px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.listeProcedures{
+	margin: 70px 0;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	
+}
+
+@media(max-width:800px){
+	.procedures{
+		width: 100%;
+	}
+	.listeProcedures{
+		justify-content: space-around;
+	}
+}
+
+@media(max-width: 1250px){
+	.containerProcedures{
+		padding-top: 5%;
+	}
+}
+
+
+.proceduresLabels{
+	margin-left: 20px;
+}
+
+
