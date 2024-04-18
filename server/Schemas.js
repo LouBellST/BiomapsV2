@@ -14,6 +14,7 @@ const moduleSchema = new mongoose.Schema({
 })
 
 const infoSchema = new mongoose.Schema({
+	name: String,
 	info: String
 })
 

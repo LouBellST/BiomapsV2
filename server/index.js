@@ -1,8 +1,13 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { moduleSchema, userSchema, infoSchema } = require('./Schemas.js')
+
+var bodyParser = require('body-parser')
+var app = express()
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 app.use(cors());
 
@@ -30,11 +35,17 @@ app.get('/modules', async (req, res) => {
 	res.send(allModules)
 })
 
+
 app.get('/infos', async (req, res) => {
 	const information = await Info.find();
 	res.send(information)
 })
 
+app.post('/infos/:value', async (req, res) => {
+	const { value } = req.params;
+	await Info.findOneAndUpdate({name: "infoName"}, {info: value})
+	res.send("new info saved")
+})
 
 app.post('/favoris/:id', async (req, res) =>{
 	const { id } = req.params;

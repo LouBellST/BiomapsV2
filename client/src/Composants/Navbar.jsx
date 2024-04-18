@@ -111,7 +111,7 @@ function DrawerAppBar(props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: `${props.showDrawer}`, md: 'none' } }}
+            sx={{ mr: 2, display: { xs: `${props.showDrawer}`, md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
@@ -120,15 +120,15 @@ function DrawerAppBar(props) {
             <Typography
               variant="h6"
               component="div"
-              sx={{ flexGrow: 1, display: { sm: 'none', md: 'flex' } }}
+              sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
             >
               <img src={logo} className="logoImage" />
               <div className="logoTitle">BioMaps</div>
             </Typography>
           </Box>
-          <Box className="navItems" sx={{ display: { sm: 'none', md: `${props.showNav}` } }}>
+          <Box className="navItems" sx={{ display: { xs: 'none', md: `${props.showNav}` } }}>
             {navItems.map((item) => ( 
-              <Button className="navItem" key={item} onClick={(e) => {e.preventDefault(); handleToggleNavButtons(item);}} sx={{ color: '#fff', mx: 0, fontWeight: 'medium', fontSize: 14 }}>
+              <Button className="navItem" key={item} onClick={(e) => {e.preventDefault(); handleToggleNavButtons(item);}} sx={{ color: '#fff', mx: 2, fontWeight: 'medium', fontSize: 14 }}>
                 {item}  
               </Button>
             ))}
@@ -177,7 +177,7 @@ function DrawerAppBar(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { sm: 'block', md: 'none' },
+            display: { xs: 'block', md: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >

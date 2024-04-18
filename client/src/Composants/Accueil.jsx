@@ -20,33 +20,51 @@ function Accueil(props) {
   const [listeServices, setListeServices] = React.useState([]);
   const [q, setQ] = React.useState("");
   const [open, setOpen] = React.useState(false);
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = React.useState(2);
+  const [modifierIcons, setModifierIcons] = React.useState('none');
+  const [toggleCount, setToggleCount] = React.useState(1);
+  const [modifierText, setModifierText] = React.useState('Modifier');
+
 
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
-  const handleNewFav = (newFav) => () => {
-    props.data(`/favoris/${newFav._id}`, 'post')
+  const handleNewFav = (newFav) => async () => {
+    await props.data(`/favoris/${newFav._id}`, 'post');
 
     setCount(count + 1);
   };
 
-  const handleSupprFav = (newFav) => () => {
-    props.data(`/favoris/${newFav._id}/delete`, 'post')
+  const handleSupprFav = (newFav) => async () => {
+    await props.data(`/favoris/${newFav._id}/delete`, 'post');
 
     setCount(count + 1);
   };
+
+  const toggleModifier = () => () => {
+    setToggleCount(toggleCount + 1);
+
+    if(toggleCount % 2 === 0){
+      setModifierIcons('none');
+      setModifierText('Modifier');
+    }
+    else{
+      setModifierIcons('block');
+      setModifierText('terminer');
+    }
+  }
 
   const fetchData = async () => {
-    const myData = await props.data('/modules', 'get')
-    setListeServices(myData)
+    const myData = await props.data('/modules', 'get');
+    setListeServices(myData);
   }
 
 
   
   useEffect(() => {
+    document.title = `${count}`
     fetchData();
   }, [count])
   
@@ -57,14 +75,14 @@ function Accueil(props) {
       
       <h1>Services</h1>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mb: 3}}>
-        <SearchBar q={q} setQ={setQ}/>
+        <SearchBar placeH="Service" q={q} setQ={setQ}/>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }} onClick={toggleDrawer(false)}>
         {listeServices.map((service, index) => {
           if(q === "" || service.nom.toLowerCase().includes(q.toLowerCase()) ) {
           return (
             <Box onClick={handleNewFav(service)}>
-              <ModuleCard  key={index} text={service.nom.toUpperCase()} style="flex-end" fontsize={15} />
+              <ModuleCard key={index} text={service.nom.toUpperCase()} style="flex-end" fontsize={15} />
             </Box>
           )}
         })}
@@ -78,7 +96,7 @@ function Accueil(props) {
   return (   
     <div className="accueil">
       <div className="card">
-        <InfoCard data={props.data} />
+        <InfoCard data={props.data} display={modifierIcons} />
       </div>
       
       <h1>Favoris</h1>
@@ -92,7 +110,7 @@ function Accueil(props) {
                   <a href={module.lien} target="_blank" rel="noopener noreferrer">
                     <ModuleCard key={index} text={module.nom.toUpperCase()} style="flex-end" fontsize={15} />
                   </a>
-                  <button onClick={handleSupprFav(module)} className="deleteFav"><img src={bin} alt="" /></button>
+                  <Button sx={{ position: 'absolute', top: '25px', right: '10px', display: `${modifierIcons}` }} onClick={handleSupprFav(module)} className="deleteFav"><img src={bin} alt="" /></Button>
                 </div>
               
               )}
@@ -101,6 +119,8 @@ function Accueil(props) {
             <ModuleCard key={"add"} text={"+"} style="center" fontsize={40}/>
           </Box>
         </div>
+
+        <Button onClick={toggleModifier()} className="modifier" sx={{ mt: 15, mb: 3, mx: 3, color: '#fff'}}>{modifierText}</Button>
 
         <Drawer anchor='right' open={open} onClose={toggleDrawer(false)}>
           {DrawerList}
