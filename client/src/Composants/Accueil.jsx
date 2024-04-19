@@ -96,7 +96,7 @@ function Accueil(props) {
   return (   
     <div className="accueil">
       <div className="card">
-        <InfoCard data={props.data} display={modifierIcons} />
+        <InfoCard user={props.user} data={props.data} display={modifierIcons} />
       </div>
       
       <h1>Favoris</h1>

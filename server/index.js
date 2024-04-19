@@ -1,14 +1,12 @@
 const express = require('express');
+const app = express()
 const cors = require('cors');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser')
 const { moduleSchema, userSchema, infoSchema } = require('./Schemas.js')
 
-var bodyParser = require('body-parser')
-var app = express()
-
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-
+app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 mongoose.connect('mongodb://127.0.0.1:27017/biomaps')
@@ -25,8 +23,9 @@ const User = mongoose.model('User', userSchema);
 const Info = mongoose.model('Info', infoSchema);
 
 
-app.get('/user', async (req, res) => {
-	const user = await User.findOne({nom: 'Jean Dupont'})
+app.get('/user/:userMail', async (req, res) => {
+	const { userMail } = req.params;
+	const user = await User.findOne({mail: userMail})
 	res.send(user);
 })
 
@@ -41,10 +40,11 @@ app.get('/infos', async (req, res) => {
 	res.send(information)
 })
 
+
 app.post('/infos/:value', async (req, res) => {
 	const { value } = req.params;
 	await Info.findOneAndUpdate({name: "infoName"}, {info: value})
-	res.send("new info saved")
+	res.send("new info")
 })
 
 app.post('/favoris/:id', async (req, res) =>{
@@ -59,6 +59,18 @@ app.post('/favoris/:id/delete', async (req, res) =>{
 	let fav = await Module.findOne({_id: id})
 	if(fav.favoris){ await Module.updateOne({_id: id}, {favoris: false}) }
 	res.send("favorite deleted");
+})
+
+
+app.post('/auth/:username/:password', async (req, res) =>{
+	const { username, password } = req.params;
+	try{
+		let fav = await User.findOne({mail: username, mdp: password})
+		if(fav !== null){res.send(true)}
+		else{res.send(false)}
+	}catch(e){
+		res.send(false);
+	}
 })
 
 

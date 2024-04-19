@@ -105,10 +105,10 @@ export default function CustomizedMenus(props) {
       onClose={handleClose}
     >
       <MenuItem onClick={(e) =>{e.preventDefault(); handleClose(); props.setFilter("Stagiaire")}} disableRipple>
-        Biomaps
+        Stagiaire
       </MenuItem>
       <MenuItem onClick={(e) =>{e.preventDefault();  handleClose(); props.setFilter("Matériel")}} disableRipple>
-        CEA
+        Matériel
       </MenuItem>
     </StyledMenu>
   )

@@ -13,6 +13,22 @@ import paysage from '../ressources/paysagePetit.jpg'
   
 function Login(props) {
 
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [incorrect, setIncorrect] = useState('none');
+
+
+  const authentifier = async () => {
+    const auth = await props.data(`/auth/${username}/${password}`, 'post');
+    if(auth.data){
+      const success = await props.data(`/user/${username}`, 'get')
+      props.setUser(success)
+      handleConnection();
+    }else{
+      setIncorrect('block');
+    }
+  }
+
   const handleConnection = () => {
     props.setIsConnected(true)
     props.setActiveSection(0);
@@ -28,13 +44,13 @@ function Login(props) {
           <form className="loginForm" action="">
             <Typography sx={{mx: 'auto', mb: 3}} variant="h4" component="div">Se connecter</Typography>
 
-            <Typography sx={{ color: '#d00', display: 'none' }} variant="h6" component="div">Vos identifiants sont incorrects</Typography>
+            <Typography sx={{ color: '#d00', display: `${incorrect}` }} variant="h6" component="div">Vos identifiants sont incorrects</Typography>
 
             <label className="labelInputs" htmlFor="id">Identifiant</label>
-            <input type="text" placeholder="jean.dupont" name="id"/>
+            <input type="text" placeholder="jeandupont@gmail.com" name="id" value={username} onChange={(e) => setUsername(e.target.value)}/>
 
             <label className="labelInputs" htmlFor="mdp">Mot de passe</label>
-            <input type="password" placeholder="Mot de passe" name="mdp" />
+            <input type="password" placeholder="Mot de passe" name="mdp" value={password} onChange={(e) => setPassword(e.target.value)}/>
   
 
             <FormControlLabel
@@ -43,7 +59,7 @@ function Login(props) {
             }
             label="Se souvenir de moi" sx={{color: 'white'}}
           />
-            <Button onClick={(e) => {e.preventDefault(); handleConnection();}} variant="contained" sx={{width: 200, mt: 3, mx: 'auto', p: '10px 10px', borderRadius: 10, bgcolor: '#3a86ff'}} >Se connecter</Button>
+            <Button onClick={(e) => {e.preventDefault(); authentifier();}} variant="contained" sx={{width: 200, mt: 3, mx: 'auto', p: '10px 10px', borderRadius: 10, bgcolor: '#3a86ff'}} >Se connecter</Button>
           </form>
 
         </Box>

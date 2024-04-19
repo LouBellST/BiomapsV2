@@ -70,16 +70,12 @@ function DrawerAppBar(props) {
   }
 
   const fetchData = async () => {
-    const myData = await props.data('/user', 'get')
+    const myData = await props.data(`/user/${props.user.mail}`, 'get')
     setLetter(myData.nom[0])
   }
   
 
-
-  useEffect(() => {
-    fetchData();
-  })
-
+  fetchData();
 
 
   const drawer = (
