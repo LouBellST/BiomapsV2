@@ -11,7 +11,7 @@
 }
 
 .accueil h1{
-	padding-top: 5%;
+	padding-top: 2%;
 	margin-left: 20px;
 	font-size: 35px;
 }
@@ -79,9 +79,10 @@
 	border-radius: 3px;
 }
 
+
 .modifier {
-	position: relative;
-	width: auto;
+	position: absolute;
+	right: -300px;
 }
 
 .modifier::before {
@@ -117,6 +118,9 @@
 		padding-top: 20%;
 	}
 
+	.accueil{
+		padding-left: 5%;
+	}
 
 	.listeModulesAccueil{
 		width: 100%;

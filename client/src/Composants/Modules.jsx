@@ -19,7 +19,7 @@ function Modules(props) {
   
 
   const fetchData = async () => {
-    const myData = await props.data('/modules', 'get')
+    const myData = await props.data('/services', 'get')
     setListeServices(myData)
   }
 
@@ -45,7 +45,7 @@ function Modules(props) {
             if(s.groupe === filter && (q === "" || s.nom.toLowerCase().includes(q.toLowerCase()) ) ){
             return (
             <a href={s.lien} target="_blank" rel="noopener noreferrer">
-              <ModuleCard key={s._id} text={s.nom.toUpperCase()} style="flex-end" fontsize={15} />
+              <ModuleCard key={s._id} text={s.nom.toUpperCase()} style="flex-end" fontsize={13} />
             </a>
             )}
           })}

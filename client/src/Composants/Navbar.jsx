@@ -35,7 +35,7 @@ function DrawerAppBar(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [letter, setLetter] = React.useState("U")
-  const settings = ['Profil', 'Personalisation', 'Déconnexion']
+  const settings = ['Profil', 'Déconnexion']
 
 
   const handleDrawerToggle = () => {
@@ -53,7 +53,7 @@ function DrawerAppBar(props) {
   const handleNavMenuButton = (setting) =>{
     if(setting === 'Déconnexion') {props.setActiveSection(5); props.setIsConnected(false); props.setShowDrawer('none'); props.setShowNav('none'); props.setBg('none');}
     else if(setting === 'Profil') {props.setActiveSection(3); props.setShowDrawer('flex'); props.setShowNav('block'); props.setBg(props.bgUser)}
-    else if(setting === 'Personalisation'){props.setActiveSection(4); props.setShowDrawer('flex'); props.setShowNav('block'); props.setBg(props.bgUser)}
+    //else if(setting === 'Personalisation'){props.setActiveSection(4); props.setShowDrawer('flex'); props.setShowNav('block'); props.setBg(props.bgUser)}
   }
 
   const handleToggleNavButtons = (item) =>{

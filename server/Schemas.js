@@ -4,15 +4,15 @@ const userSchema = new mongoose.Schema({
 	nom: String,
 	mdp: String,
 	mail: String,
-	admin: Boolean
+	admin: Boolean,
+	favoris: []
 })
 
 
-const moduleSchema = new mongoose.Schema({
+const serviceSchema = new mongoose.Schema({
 	nom: String,
 	lien: String,
-	groupe: String,
-	favoris: Boolean
+	groupe: String
 })
 
 const infoSchema = new mongoose.Schema({
@@ -21,4 +21,4 @@ const infoSchema = new mongoose.Schema({
 })
 
 
-module.exports = { moduleSchema, userSchema, infoSchema }
+module.exports = { serviceSchema, userSchema, infoSchema }

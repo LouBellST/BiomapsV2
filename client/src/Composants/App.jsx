@@ -18,7 +18,7 @@ function App() {
   const [showNav, setShowNav] = useState('none');
   const [showDrawer, setShowDrawer] = useState('none')
   const [user, setUser] = useState(null);
-
+  
 
   const apiCall = (addr, method) => {
     if (method === 'post'){

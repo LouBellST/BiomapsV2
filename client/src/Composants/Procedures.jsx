@@ -19,7 +19,7 @@ function Procedures(props) {
   
 
   const fetchData = async () => {
-    const myData = await props.data('/modules', 'get')
+    const myData = await props.data('/services', 'get')
     setListeProcedures(myData)
   }
 

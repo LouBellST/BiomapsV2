@@ -23,7 +23,7 @@ export default function SearchBar(props) {
         className='searchInput'
         sx={{ ml: 1, flex: 1 }}
         placeholder={props.placeH}
-        inputProps={{ 'aria-label': 'search a module' }}
+        inputProps={{ 'aria-label': 'search a service' }}
         value={props.q}
         onChange={(e) => props.setQ(e.target.value)}
       />

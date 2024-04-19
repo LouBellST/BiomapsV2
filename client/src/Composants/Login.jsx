@@ -16,6 +16,9 @@ function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [incorrect, setIncorrect] = useState('none');
+  const [typeInput, setTypeInput] = useState(2);
+
+  const inputTypes = ["password", "text"];
 
 
   const authentifier = async () => {
@@ -39,18 +42,21 @@ function Login(props) {
 
   return (   
       <div className="overlayLogin">
-        <Box className="loginCard" sx={{ boxShadow: 20, bgcolor: '#fff2', backdropFilter: 'blur(5px)' }}>
+        <Box className="loginCard" sx={{ backgroundAttachment: 'fixed', overflowY: 'scroll', boxShadow: 20, bgcolor: '#fff2', backdropFilter: 'blur(5px)', position: 'relative' }}>
 
           <form className="loginForm" action="">
-            <Typography sx={{mx: 'auto', mb: 3}} variant="h4" component="div">Se connecter</Typography>
+            <Typography sx={{mx: 'auto', mb: 2 }} variant="h4" component="div">Se connecter</Typography>
 
-            <Typography sx={{ color: '#d00', display: `${incorrect}` }} variant="h6" component="div">Vos identifiants sont incorrects</Typography>
+            <Typography sx={{ color: '#d00', display: `${incorrect}`, mt: 2, position: 'absolute', top: 70 }} variant="h8" component="div">Vos identifiants sont incorrects</Typography>
 
             <label className="labelInputs" htmlFor="id">Identifiant</label>
             <input type="text" placeholder="jeandupont@gmail.com" name="id" value={username} onChange={(e) => setUsername(e.target.value)}/>
 
             <label className="labelInputs" htmlFor="mdp">Mot de passe</label>
-            <input type="password" placeholder="Mot de passe" name="mdp" value={password} onChange={(e) => setPassword(e.target.value)}/>
+            <div className="passwordInput">
+              <input type={inputTypes[typeInput%2]} placeholder="Mot de passe" name="mdp" value={password} onChange={(e) => setPassword(e.target.value)}/>
+              <Button onClick={() => setTypeInput(typeInput+1)} sx={{ position: 'absolute', right: 5, top: '6px', color: 'grey' }}>afficher</Button>
+            </div>
   
 
             <FormControlLabel
@@ -59,7 +65,7 @@ function Login(props) {
             }
             label="Se souvenir de moi" sx={{color: 'white'}}
           />
-            <Button onClick={(e) => {e.preventDefault(); authentifier();}} variant="contained" sx={{width: 200, mt: 3, mx: 'auto', p: '10px 10px', borderRadius: 10, bgcolor: '#3a86ff'}} >Se connecter</Button>
+            <Button type="submit" onClick={(e) => {e.preventDefault(); authentifier();}} variant="contained" sx={{width: 200, mt: 3, mx: 'auto', p: '10px 10px', borderRadius: 10, bgcolor: '#3a86ff'}} >Se connecter</Button>
           </form>
 
         </Box>

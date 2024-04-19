@@ -3,7 +3,7 @@ const app = express()
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
-const { moduleSchema, userSchema, infoSchema } = require('./Schemas.js')
+const { serviceSchema, userSchema, infoSchema } = require('./Schemas.js')
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,7 +18,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/biomaps')
 	console.log(err)
 })
 
-const Module = mongoose.model('Module', moduleSchema);
+const Service = mongoose.model('Service', serviceSchema);
 const User = mongoose.model('User', userSchema);
 const Info = mongoose.model('Info', infoSchema);
 
@@ -29,9 +29,9 @@ app.get('/user/:userMail', async (req, res) => {
 	res.send(user);
 })
 
-app.get('/modules', async (req, res) => {
-	const allModules = await Module.find();
-	res.send(allModules)
+app.get('/services', async (req, res) => {
+	const allServices = await Service.find();
+	res.send(allServices)
 })
 
 
@@ -47,17 +47,23 @@ app.post('/infos/:value', async (req, res) => {
 	res.send("new info")
 })
 
-app.post('/favoris/:id', async (req, res) =>{
-	const { id } = req.params;
-	let newFav = await Module.findOne({_id: id})
-	if(!newFav.favoris){ await Module.updateOne({_id: id}, {favoris: true}) }
-	res.send("new favorite added");
+app.post('/favoris/:mail/:id', async (req, res) =>{
+	const { mail,id } = req.params;
+	let newFav = await Service.findOne({_id: id})
+	let user = await User.findOne({mail: mail})
+	const isIn = user.favoris.some(f => f.nom === newFav.nom);
+	if(!isIn){
+		await User.findOneAndUpdate({mail: mail}, {$push: {favoris: newFav}})
+		res.send("new favorite added");
+	}else{
+		res.send("new favorite not added");
+	}
 })
 
-app.post('/favoris/:id/delete', async (req, res) =>{
-	const { id } = req.params;
-	let fav = await Module.findOne({_id: id})
-	if(fav.favoris){ await Module.updateOne({_id: id}, {favoris: false}) }
+app.post('/favoris/:mail/:id/delete', async (req, res) =>{
+	const { mail,id } = req.params;
+	let fav = await Service.findOne({_id: id})
+	await User.findOneAndUpdate({mail: mail}, {$pull: {favoris: fav}})
 	res.send("favorite deleted");
 })
 

@@ -24,6 +24,7 @@ function Accueil(props) {
   const [modifierIcons, setModifierIcons] = React.useState('none');
   const [toggleCount, setToggleCount] = React.useState(1);
   const [modifierText, setModifierText] = React.useState('Modifier');
+  const [listeFavoris, setListeFavoris] = React.useState([]);
 
 
 
@@ -32,13 +33,13 @@ function Accueil(props) {
   };
 
   const handleNewFav = (newFav) => async () => {
-    await props.data(`/favoris/${newFav._id}`, 'post');
+    await props.data(`/favoris/${props.user.mail}/${newFav._id}`, 'post');
 
     setCount(count + 1);
   };
 
   const handleSupprFav = (newFav) => async () => {
-    await props.data(`/favoris/${newFav._id}/delete`, 'post');
+    await props.data(`/favoris/${props.user.mail}/${newFav._id}/delete`, 'post');
 
     setCount(count + 1);
   };
@@ -57,8 +58,10 @@ function Accueil(props) {
   }
 
   const fetchData = async () => {
-    const myData = await props.data('/modules', 'get');
+    const myData = await props.data('/services', 'get');
     setListeServices(myData);
+    const success = await props.data(`/user/${props.user.mail}`, 'get')
+    setListeFavoris(success.favoris);
   }
 
 
@@ -71,7 +74,7 @@ function Accueil(props) {
 
   
   const DrawerList = (
-    <Box sx={{ height: '100%', textAlign: 'center', width: 400, display: 'flex', flexDirection: 'column', bgcolor: '#777', color: '#fff', pt: 2 }} role="presentation" >
+    <Box sx={{ backgroundAttachment: 'fixed', overflowY: 'scroll', height: '100%', textAlign: 'center', width: 400, display: 'flex', flexDirection: 'column', bgcolor: '#777', color: '#fff', pt: 2 }} role="presentation" >
       
       <h1>Services</h1>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mb: 3}}>
@@ -82,7 +85,7 @@ function Accueil(props) {
           if(q === "" || service.nom.toLowerCase().includes(q.toLowerCase()) ) {
           return (
             <Box onClick={handleNewFav(service)}>
-              <ModuleCard key={index} text={service.nom.toUpperCase()} style="flex-end" fontsize={15} />
+              <ModuleCard key={index} text={service.nom.toUpperCase()} style="flex-end" fontsize={13} />
             </Box>
           )}
         })}
@@ -96,31 +99,31 @@ function Accueil(props) {
   return (   
     <div className="accueil">
       <div className="card">
-        <InfoCard user={props.user} data={props.data} display={modifierIcons} />
+        <div className="modifierContainer">
+          <InfoCard user={props.user} data={props.data} display={modifierIcons} />
+          <Button onClick={toggleModifier()} className="modifier" sx={{ mt: 5, mx: 0, color: '#fff'}}>{modifierText}</Button>
+        </div>
       </div>
+
       
       <h1>Favoris</h1>
 
       <div className="elementsAccueil">
         <div className="listeModulesAccueil">
-          {listeServices.map((module, index) => {
-            if(module.favoris){
-              return (
+          {listeFavoris.map((service, index) => (
                 <div className="favLink">
-                  <a href={module.lien} target="_blank" rel="noopener noreferrer">
-                    <ModuleCard key={index} text={module.nom.toUpperCase()} style="flex-end" fontsize={15} />
+                  <a href={service.lien} target="_blank" rel="noopener noreferrer">
+                    <ModuleCard key={index} text={service.nom.toUpperCase()} style="flex-end" fontsize={13} />
                   </a>
-                  <Button sx={{ position: 'absolute', top: '25px', right: '10px', display: `${modifierIcons}` }} onClick={handleSupprFav(module)} className="deleteFav"><img src={bin} alt="" /></Button>
+                  <Button sx={{ position: 'absolute', top: '25px', right: '10px', display: `${modifierIcons}` }} onClick={handleSupprFav(service)} className="deleteFav"><img src={bin} alt="" /></Button>
                 </div>
               
-              )}
-          })}
+              )
+          )}
           <Box onClick={toggleDrawer(true)} >
             <ModuleCard key={"add"} text={"+"} style="center" fontsize={40}/>
           </Box>
         </div>
-
-        <Button onClick={toggleModifier()} className="modifier" sx={{ mt: 15, mb: 3, mx: 3, color: '#fff'}}>{modifierText}</Button>
 
         <Drawer anchor='right' open={open} onClose={toggleDrawer(false)}>
           {DrawerList}
