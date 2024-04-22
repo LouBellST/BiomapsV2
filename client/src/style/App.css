@@ -9,6 +9,18 @@
   margin-right: 20px;
 }
 
+.searchLogo img{
+	width: 24px;
+	height: 24px;
+}
+
+.navInput{
+	padding: 10px 10px;
+	width: 350px;
+	border: none;
+	border-radius: 3px;
+}
+
 .logo{
 	padding: 10px 10px;
 }

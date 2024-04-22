@@ -23,6 +23,7 @@ function Accueil(props) {
   const [count, setCount] = React.useState(2);
   const [modifierIcons, setModifierIcons] = React.useState('none');
   const [toggleCount, setToggleCount] = React.useState(1);
+  const [toggleCountInput, setToggleCountInput] = React.useState(1);
   const [modifierText, setModifierText] = React.useState('Modifier');
   const [listeFavoris, setListeFavoris] = React.useState([]);
 
@@ -50,6 +51,7 @@ function Accueil(props) {
     if(toggleCount % 2 === 0){
       setModifierIcons('none');
       setModifierText('Modifier');
+      setToggleCountInput(1);
     }
     else{
       setModifierIcons('block');
@@ -74,7 +76,7 @@ function Accueil(props) {
 
   
   const DrawerList = (
-    <Box sx={{ backgroundAttachment: 'fixed', overflowY: 'scroll', height: '100%', textAlign: 'center', width: 400, display: 'flex', flexDirection: 'column', bgcolor: '#777', color: '#fff', pt: 2 }} role="presentation" >
+    <Box sx={{ backgroundAttachment: 'fixed', overflowY: 'scroll', height: '100%', textAlign: 'center', width: 400, display: 'flex', flexDirection: 'column', bgcolor: '#333', color: '#fff', pt: 2 }} role="presentation" >
       
       <h1>Services</h1>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mb: 3}}>
@@ -90,7 +92,6 @@ function Accueil(props) {
           )}
         })}
       </Box>
-       
 
     </Box>
   );
@@ -100,7 +101,7 @@ function Accueil(props) {
     <div className="accueil">
       <div className="card">
         <div className="modifierContainer">
-          <InfoCard user={props.user} data={props.data} display={modifierIcons} />
+          <InfoCard toggleCount={toggleCountInput} setToggleCount={setToggleCountInput} user={props.user} data={props.data} display={modifierIcons} />
           <Button onClick={toggleModifier()} className="modifier" sx={{ mt: 5, mx: 0, color: '#fff'}}>{modifierText}</Button>
         </div>
       </div>

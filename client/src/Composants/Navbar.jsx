@@ -23,6 +23,8 @@ import MenuItem from '@mui/material/MenuItem';
 import '../style/App.css'
 
 import logo from '../ressources/BiomapsLogo.png'
+import searchLogo from '../ressources/search.png'
+import { inputAdornmentClasses } from '@mui/material';
 
 const drawerWidth = 240;
 const navItems = ['Accueil', 'Services', 'Procédures'];
@@ -34,8 +36,9 @@ function DrawerAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [letter, setLetter] = React.useState("U")
-  const settings = ['Profil', 'Déconnexion']
+  const [letter, setLetter] = React.useState("U");
+  const settings = ['Profil', 'Déconnexion'];
+  const [searchValue, setSearchValue] = React.useState("");
 
 
   const handleDrawerToggle = () => {
@@ -52,7 +55,7 @@ function DrawerAppBar(props) {
 
   const handleNavMenuButton = (setting) =>{
     if(setting === 'Déconnexion') {props.setActiveSection(5); props.setIsConnected(false); props.setShowDrawer('none'); props.setShowNav('none'); props.setBg('none');}
-    else if(setting === 'Profil') {props.setActiveSection(3); props.setShowDrawer('flex'); props.setShowNav('block'); props.setBg(props.bgUser)}
+    else if(setting === 'Profil') {props.setActiveSection(3); props.setShowDrawer('flex'); props.setShowNav('block'); props.setBg(props.bgUser);}
     //else if(setting === 'Personalisation'){props.setActiveSection(4); props.setShowDrawer('flex'); props.setShowNav('block'); props.setBg(props.bgUser)}
   }
 
@@ -67,6 +70,19 @@ function DrawerAppBar(props) {
         }
       }
     }
+  }
+
+  const showNavInput = (e) => {
+    e.stopPropagation();
+    props.setShowInput(true)   
+  }
+
+  const hideNavInput = () => {
+    props.setShowInput(false)
+  }
+
+  const handleSubmitSearch = () => {
+    props.setActiveSection(1);
   }
 
   const fetchData = async () => {
@@ -95,12 +111,14 @@ function DrawerAppBar(props) {
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
+
+  const searchNav = props.showInput ? (<form action="" onSubmit={(e) => {e.preventDefault()}}><input autoFocus value={searchValue} onChange={(e) => setSearchValue(e.target.value)} placeholder="Rechercher" className="navInput" type='text' alt="" /></form>) : (<img src={searchLogo} alt="" />);
   
 
   return (
     <Box >
       <CssBaseline />
-      <AppBar component="nav" sx={{ bgcolor: '#0000', boxShadow: 0 }} className="navbar">
+      <AppBar onClick={() => hideNavInput()} onSubmit={handleSubmitSearch} component="nav" sx={{ bgcolor: '#0000', boxShadow: 0 }} className="navbar">
         <Toolbar >
           <IconButton
             color="inherit"
@@ -123,6 +141,9 @@ function DrawerAppBar(props) {
             </Typography>
           </Box>
           <Box className="navItems" sx={{ display: { xs: 'none', md: `${props.showNav}` } }}>
+            <Button sx={{mr: 1}} onClick={(e) => showNavInput(e)} className='searchLogo'>
+              {searchNav}
+            </Button>
             {navItems.map((item) => ( 
               <Button className="navItem" key={item} onClick={(e) => {e.preventDefault(); handleToggleNavButtons(item);}} sx={{ color: '#fff', mx: 2, fontWeight: 'medium', fontSize: 14 }}>
                 {item}  

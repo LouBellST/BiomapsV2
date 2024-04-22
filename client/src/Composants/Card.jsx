@@ -13,14 +13,13 @@ import edit from '../ressources/edit.png'
 export default function InfoCard(props) {
 
   const [infos, setInfos] = React.useState("Pas d'information aujourd'hui");
-  const [toggleCount, setToggleCount] = React.useState(1);
   const [valueInfo, setValueInfo] = React.useState("")
   const array = [<form action="" onSubmit={e => {handleSubmit(e)}}><input className="inputInfo" placeholder={infos} name='newInfo' value={valueInfo} onChange={(e) => setValueInfo(e.target.value)}/></form>, <Typography variant="body2" color="#fff9">{infos}</Typography>]
 
 
   const handleEdit = () => () => {
     if(props.user.admin){
-      setToggleCount(toggleCount + 1);
+      props.setToggleCount(props.toggleCount + 1);
     }else{
       alert("Vous n'avez pas les droits nécessaires.")
     }
@@ -57,7 +56,7 @@ export default function InfoCard(props) {
     try{
       await props.data(`/infos/${value}`, 'post');
     }catch(e){alert("attention à certains caractères spéciaux");console.log(e);}
-    setToggleCount(toggleCount + 1);
+    props.setToggleCount(props.toggleCount + 1);
   }
 
   const fetchData = async () => {
@@ -84,7 +83,7 @@ export default function InfoCard(props) {
           <Typography gutterBottom variant="h5" component="div">
             Information
           </Typography>
-          {array[toggleCount%2]}
+          {array[props.toggleCount%2]}
         </CardContent>
       </CardActionArea>
     </Card>

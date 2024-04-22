@@ -18,6 +18,8 @@ function App() {
   const [showNav, setShowNav] = useState('none');
   const [showDrawer, setShowDrawer] = useState('none')
   const [user, setUser] = useState(null);
+  const [showInput, setShowInput] = useState(false);
+  const [valueNavSearch, setValueNavSearch] = useState("");
   
 
   const apiCall = (addr, method) => {
@@ -34,8 +36,8 @@ function App() {
  
   return (   
     <div className="app">   
-      <DrawerAppBar user={user} data={apiCall} activeSection={activeSection} setActiveSection={setActiveSection} isConnected={isConnected} setIsConnected={setIsConnected} bg={bg} setBg={setBg} bgUser={bgUser} showNav={showNav} setShowNav={setShowNav} showDrawer={showDrawer} setShowDrawer={setShowDrawer}/>
-      <InterfacePrincipale user={user} setUser={setUser} data={apiCall} activeSection={activeSection} setActiveSection={setActiveSection} setIsConnected={setIsConnected} bg={bg} setBg={setBg} bgUser={bgUser} setBgUser={setBgUser} setShowNav={setShowNav} setShowDrawer={setShowDrawer}/>
+      <DrawerAppBar showInput={showInput} setShowInput={setShowInput} user={user} data={apiCall} activeSection={activeSection} setActiveSection={setActiveSection} isConnected={isConnected} setIsConnected={setIsConnected} bg={bg} setBg={setBg} bgUser={bgUser} showNav={showNav} setShowNav={setShowNav} showDrawer={showDrawer} setShowDrawer={setShowDrawer}/>
+      <InterfacePrincipale setShowInput={setShowInput} user={user} setUser={setUser} data={apiCall} activeSection={activeSection} setActiveSection={setActiveSection} setIsConnected={setIsConnected} bg={bg} setBg={setBg} bgUser={bgUser} setBgUser={setBgUser} setShowNav={setShowNav} setShowDrawer={setShowDrawer}/>
     </div>
   )
 }

@@ -17,7 +17,7 @@ function InterfacePrincipale(props) {
 
 
   return (   
-    <Box sx={{ background: `${props.bg}` }} className="background">
+    <Box onClick={() => props.setShowInput(false)} sx={{ background: `${props.bg}` }} className="background">
       <div className="overlay">
         {ecrans[props.activeSection]}
       </div>

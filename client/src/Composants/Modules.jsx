@@ -42,7 +42,7 @@ function Modules(props) {
         
         <div className="listeModules">
           {listeServices.map((s) => {
-            if(s.groupe === filter && (q === "" || s.nom.toLowerCase().includes(q.toLowerCase()) ) ){
+            if(s.groupe.toLowerCase() === filter.toLocaleLowerCase() && (q === "" || s.nom.toLowerCase().includes(q.toLowerCase())) ){
             return (
             <a href={s.lien} target="_blank" rel="noopener noreferrer">
               <ModuleCard key={s._id} text={s.nom.toUpperCase()} style="flex-end" fontsize={13} />
