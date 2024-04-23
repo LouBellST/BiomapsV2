@@ -19,6 +19,9 @@ import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { redirect } from "react-router-dom";
 
 import '../style/App.css'
 
@@ -39,6 +42,7 @@ function DrawerAppBar(props) {
   const [letter, setLetter] = React.useState("U");
   const settings = ['Profil', 'Déconnexion'];
   const [searchValue, setSearchValue] = React.useState("");
+  const [listeServices, setListeServices] = React.useState([]);
 
 
   const handleDrawerToggle = () => {
@@ -81,13 +85,11 @@ function DrawerAppBar(props) {
     props.setShowInput(false)
   }
 
-  const handleSubmitSearch = () => {
-    props.setActiveSection(1);
-  }
-
   const fetchData = async () => {
-    const myData = await props.data(`/user/${props.user.mail}`, 'get')
-    setLetter(myData.nom[0])
+    const myData = await props.data(`/user/${props.user.mail}`, 'get');
+    setLetter(myData.nom[0]);
+    const MyList = await props.data('/services', 'get');
+    setListeServices(MyList);
   }
   
 
@@ -112,13 +114,25 @@ function DrawerAppBar(props) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
-  const searchNav = props.showInput ? (<form action="" onSubmit={(e) => {e.preventDefault()}}><input autoFocus value={searchValue} onChange={(e) => setSearchValue(e.target.value)} placeholder="Rechercher" className="navInput" type='text' alt="" /></form>) : (<img src={searchLogo} alt="" />);
+  const searchNav = props.showInput ? (
+  <div className='dropdown'>
+    <input autoFocus value={searchValue} onChange={(e) => setSearchValue(e.target.value)} placeholder='Rechercher' className='navInput'/>
+    <div class="dropdown-content">
+      {listeServices.map((s) => {
+        if(searchValue === "" || s.nom.toLowerCase().includes(searchValue.toLowerCase())){
+        return (
+          <a href={s.lien} target="_blank" rel="noopener noreferrer">{s.nom}</a>
+        )}
+      })}
+    </div>
+  </div>
+  ) : (<img src={searchLogo} alt="" />);
   
 
   return (
     <Box >
       <CssBaseline />
-      <AppBar onClick={() => hideNavInput()} onSubmit={handleSubmitSearch} component="nav" sx={{ bgcolor: '#0000', boxShadow: 0 }} className="navbar">
+      <AppBar onClick={() => hideNavInput()} component="nav" sx={{ bgcolor: '#0000', boxShadow: 0 }} className="navbar">
         <Toolbar >
           <IconButton
             color="inherit"
@@ -145,7 +159,7 @@ function DrawerAppBar(props) {
               {searchNav}
             </Button>
             {navItems.map((item) => ( 
-              <Button className="navItem" key={item} onClick={(e) => {e.preventDefault(); handleToggleNavButtons(item);}} sx={{ color: '#fff', mx: 2, fontWeight: 'medium', fontSize: 14 }}>
+              <Button className="navItem" key={item} onClick={(e) => {e.preventDefault(); handleToggleNavButtons(item);}} sx={{ color: '#fff', mx:{ sm: 0, lg: 2}, fontWeight: 'medium', fontSize: 14 }}>
                 {item}  
               </Button>
             ))}
