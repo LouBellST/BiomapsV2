@@ -60,8 +60,12 @@ export default function InfoCard(props) {
   }
 
   const fetchData = async () => {
-    const infosData = await props.data('/infos', 'get');
-    setInfos(infosData[0].info);
+    try{
+      const infosData = await props.data('/infos', 'get');
+      setInfos(infosData[0].info);
+    }catch(e){
+      console.log(e)
+    }
   }
 
   fetchData();

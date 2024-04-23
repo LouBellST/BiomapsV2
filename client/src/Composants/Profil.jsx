@@ -12,14 +12,16 @@ function Profil(props) {
   }
 
   const fetchData = async () => {
-    const myData = await props.data(`/user/${props.user.mail}`, 'get')
-    setName(myData.nom)
-    setMail(myData.mail)
+    try{
+      const myData = await props.data(`/user/${props.user.mail}`, 'get')
+      setName(myData.nom)
+      setMail(myData.mail)
+    }catch(e){
+      console.log(e);
+    }
   }
   
   fetchData();
-
-
 
 
   return (   

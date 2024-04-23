@@ -22,13 +22,17 @@ function Login(props) {
 
 
   const authentifier = async () => {
-    const auth = await props.data(`/auth/${username}/${password}`, 'post');
-    if(auth.data){
-      const success = await props.data(`/user/${username}`, 'get')
-      props.setUser(success)
-      handleConnection();
-    }else{
-      setIncorrect('block');
+    try{
+      const auth = await props.data(`/auth/${username}/${password}`, 'post');
+      if(auth.data){
+        const success = await props.data(`/user/${username}`, 'get')
+        props.setUser(success)
+        handleConnection();
+      }else{
+        setIncorrect('block');
+      }
+    }catch(e){
+      console.log(e);
     }
   }
 

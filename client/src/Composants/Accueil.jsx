@@ -34,15 +34,23 @@ function Accueil(props) {
   };
 
   const handleNewFav = (newFav) => async () => {
-    await props.data(`/favoris/${props.user.mail}/${newFav._id}`, 'post');
+    try{
+      await props.data(`/favoris/${props.user.mail}/${newFav._id}`, 'post');
 
-    setCount(count + 1);
+      setCount(count + 1);
+    }catch(e){
+      console.log(e);
+    }
   };
 
   const handleSupprFav = (newFav) => async () => {
-    await props.data(`/favoris/${props.user.mail}/${newFav._id}/delete`, 'post');
+    try{
+      await props.data(`/favoris/${props.user.mail}/${newFav._id}/delete`, 'post');
 
-    setCount(count + 1);
+      setCount(count + 1);
+    }catch(e){
+      console.log(e);
+    }
   };
 
   const toggleModifier = () => () => {
@@ -60,16 +68,19 @@ function Accueil(props) {
   }
 
   const fetchData = async () => {
-    const myData = await props.data('/services', 'get');
-    setListeServices(myData);
-    const success = await props.data(`/user/${props.user.mail}`, 'get')
-    setListeFavoris(success.favoris);
+    try{
+      const myData = await props.data('/services', 'get');
+      setListeServices(myData);
+      const success = await props.data(`/user/${props.user.mail}`, 'get')
+      setListeFavoris(success.favoris);
+    }catch(e){
+      console.log(e);
+    }
   }
 
 
   
   useEffect(() => {
-    document.title = `${count}`
     fetchData();
   }, [count])
   

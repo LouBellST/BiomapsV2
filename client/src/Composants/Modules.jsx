@@ -19,17 +19,15 @@ function Modules(props) {
   
 
   const fetchData = async () => {
-    const myData = await props.data('/services', 'get')
-    setListeServices(myData)
+    try{
+      const myData = await props.data('/services', 'get')
+      setListeServices(myData)
+    }catch(e){
+      console.log(e);
+    }
   }
 
-
-
-  useEffect(() => {
-    fetchData();
-  })
-  
-
+  fetchData();
   
   return (   
     <div className="container">

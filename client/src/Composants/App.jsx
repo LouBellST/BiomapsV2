@@ -23,14 +23,16 @@ function App() {
   
 
   const apiCall = (addr, method) => {
-    if (method === 'post'){
-     return axios.post(`http://localhost:8080${addr}`)
-   }
-
-    else if(method === 'get'){ 
-      return axios.get(`http://localhost:8080${addr}`).then(response => response.data);
+    try{
+      if (method === 'post'){
+        return axios.post(`http://localhost:8080${addr}`)
+      }
+       else if(method === 'get'){ 
+         return axios.get(`http://localhost:8080${addr}`).then(response => response.data);
+       }
+    }catch(e){
+      console.log(e)
     }
-    
   }
 
  

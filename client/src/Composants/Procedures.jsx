@@ -19,16 +19,16 @@ function Procedures(props) {
   
 
   const fetchData = async () => {
-    const myData = await props.data('/services', 'get')
-    setListeProcedures(myData)
+    try{
+      const myData = await props.data('/services', 'get')
+      setListeProcedures(myData)
+    }catch(e){
+      console.log(e);
+    }
   }
 
-
-
-  useEffect(() => {
-    fetchData();
-  })
   
+  fetchData();
 
   
   return (   

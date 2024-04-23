@@ -86,10 +86,14 @@ function DrawerAppBar(props) {
   }
 
   const fetchData = async () => {
-    const myData = await props.data(`/user/${props.user.mail}`, 'get');
-    setLetter(myData.nom[0]);
-    const MyList = await props.data('/services', 'get');
-    setListeServices(MyList);
+    try{
+      const myData = await props.data(`/user/${props.user.mail}`, 'get');
+      setLetter(myData.nom[0]);
+      const MyList = await props.data('/services', 'get');
+      setListeServices(MyList);
+    }catch(e){
+      console.log(e);
+    }
   }
   
 
