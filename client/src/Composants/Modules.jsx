@@ -1,14 +1,14 @@
 import * as React from 'react'
 import { useEffect } from 'react'
 import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 import '../style/modules.css'
 
 import CustomizedMenus from './Groupes'
 import ModuleCard from './ModuleCard'
 import SearchBar from './SearchBar'
-
-import Box from '@mui/material/Box';
 
 
 function Modules(props) {
@@ -37,6 +37,7 @@ function Modules(props) {
           <CustomizedMenus id={0} filter={filter} setFilter={setFilter} />
           <SearchBar placeH="Service" q={q} setQ={setQ}/>
         </Box>
+        <Button onClick={() => {if(props.user.admin){props.setActiveSection(6)}else{alert("Vous n'avez pas la permission.")} } } sx={{my: 2, ml: 2, border: '1px solid #fff1', bgcolor: '#fff2', backdropFilter: 'blur(4px)', color: '#fff', boxShadow: 2, '&:hover': {border: '1px solid #fff1', bgcolor: '#fff1', color: '#fff'}}} variant="outlined">Ajouter un service</Button>
         
         <div className="listeModules">
           {listeServices.map((s) => {

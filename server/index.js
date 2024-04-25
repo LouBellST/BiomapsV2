@@ -2,11 +2,10 @@ const express = require('express');
 const app = express()
 const cors = require('cors');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser')
 const { serviceSchema, userSchema, infoSchema } = require('./Schemas.js')
 
-app.use(express.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cors());
 
 mongoose.connect('mongodb://127.0.0.1:27017/biomaps')
@@ -41,8 +40,8 @@ app.get('/infos', async (req, res) => {
 })
 
 
-app.post('/infos/:value', async (req, res) => {
-	const { value } = req.params;
+app.post('/infos', async (req, res) => {
+	const { value } = req.body;
 	await Info.findOneAndUpdate({name: "infoName"}, {info: value})
 	res.send("new info")
 })
@@ -68,14 +67,25 @@ app.post('/favoris/:mail/:id/delete', async (req, res) =>{
 })
 
 
-app.post('/auth/:username/:password', async (req, res) =>{
-	const { username, password } = req.params;
+app.post('/auth', async (req, res) =>{
+	const { username, password } = req.body;
 	try{
 		let fav = await User.findOne({mail: username, mdp: password})
 		if(fav !== null){res.send(true)}
 		else{res.send(false)}
 	}catch(e){
-		res.send(false);
+		res.send(e);
+	}
+})
+
+app.post('/newService', async (req, res) => {
+	const { nom, lien, groupe } = req.body;
+	try{
+		await Service.create({nom: nom, lien: lien, groupe: groupe});
+		res.send("Service créé")
+	}catch(e){
+		res.send("Une erreur est survenue")
+		res.send(e)
 	}
 })
 

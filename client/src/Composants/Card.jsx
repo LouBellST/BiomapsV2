@@ -9,6 +9,8 @@ import Textarea from '@mui/material/TextField';
 import infoLogo from '../ressources/info.png'
 import edit from '../ressources/edit.png'
 
+import axios from 'axios';
+
 // element d'information de la page d'accueil
 export default function InfoCard(props) {
 
@@ -25,37 +27,14 @@ export default function InfoCard(props) {
     }
   }
 
-  function convert_text(text) {
-    let t = text;
-
-    const specChars = {
-        ' ': '%20', '!': '%21', '"': '%22',
-        '#': '%23', '$': '%24', '%': '%25',
-        '&': '%26', '\'': '%27', '(': '%28',
-        ')': '%29', '*': '%2A', '+': '%2B',
-        ',': '%2C', '-': '%2D', '.': '%2E',
-        '/': '%2F', ':': '%3A', ';': '%3B',
-        '<': '%3C', '=': '%3D', '>': '%3E',
-        '?': '%3F', '@': '%40', '[': '%5B',
-        '\\': '%5C', ']': '%5D', '^': '%5E',
-        '_': '%5F', '`': '%60', '{': '%7B',
-        '|': '%7C', '}': '%7D', '~': '%7E'
-    };
-
-    Object.keys(specChars).map(key => {
-      const value = specChars[key];
-      t.replaceAll(key, value);
-    })
-
-    return t;
-  } 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const value = convert_text(valueInfo)
     try{
-      await props.data(`/infos/${value}`, 'post');
-    }catch(e){alert("attention à certains caractères spéciaux");console.log(e);}
+      await axios.post('http://localhost:8080/infos', {value: valueInfo});
+    }catch(e){
+      console.log(e);
+    }
     props.setToggleCount(props.toggleCount + 1);
   }
 

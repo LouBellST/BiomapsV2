@@ -126,6 +126,7 @@ export default function CustomizedMenus(props) {
         variant="outlined"
         disableElevation
         onClick={handleClick}
+        sx={{ width: 155 }}
       >
         {props.filter}
         <KeyboardArrowDownIcon />

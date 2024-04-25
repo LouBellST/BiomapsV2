@@ -10,6 +10,8 @@ import '../style/login.css'
 
 import paysage from '../ressources/paysagePetit.jpg'
 
+import axios from 'axios';
+
   
 function Login(props) {
 
@@ -23,7 +25,7 @@ function Login(props) {
 
   const authentifier = async () => {
     try{
-      const auth = await props.data(`/auth/${username}/${password}`, 'post');
+      const auth = await axios.post('http://localhost:8080/auth', {username: username, password: password});
       if(auth.data){
         const success = await props.data(`/user/${username}`, 'get')
         props.setUser(success)
