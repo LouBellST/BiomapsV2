@@ -32,6 +32,10 @@
 	margin-left: 20px;
 }
 
+.serviceContainer{
+	position: relative;
+}
+
 @media(max-width:800px){
 	.modules{
 		width: 95%;

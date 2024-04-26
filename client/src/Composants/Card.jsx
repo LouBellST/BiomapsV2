@@ -49,10 +49,14 @@ export default function InfoCard(props) {
 
   fetchData();
 
+  const boutonAdmin = (props.user.admin) ? (
+    <Button sx={{	position: 'absolute',top: '3px', right: '-10px', display: `${props.display}` }} onClick={handleEdit()} className="editInfo"><img src={edit} alt="" /></Button>
+  ) : null;
+
 
   return (
     <Card sx={{ position: 'relative', boxShadow: 3, border: 'solid 0.5px #fff2', bgcolor: '#fff3', backdropFilter: 'blur(5px)', color: 'white', maxWidth: 345, borderRadius: 2, mx: 10, maxHeight: 340, minWidth: 280}} >
-      <Button sx={{	position: 'absolute',top: '3px', right: '-10px', display: `${props.display}` }} onClick={handleEdit()} className="editInfo"><img src={edit} alt="" /></Button>
+      {boutonAdmin}
       <CardActionArea>
         <CardMedia
           component="img"

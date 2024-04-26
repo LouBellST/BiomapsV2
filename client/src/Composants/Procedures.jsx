@@ -1,7 +1,4 @@
 import * as React from 'react'
-import { useEffect } from 'react'
-import Link from '@mui/material/Link';
-
 import '../style/procedures.css'
 
 import CustomizedMenus from './Groupes'
@@ -9,27 +6,49 @@ import ModuleCard from './ModuleCard'
 import SearchBar from './SearchBar'
 
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+
+import pdf from '../ressources/Rapport_proco.pdf'
+import bin from '../ressources/bin.png'
 
 function Procedures(props) {
 
   const listeFilters = ["Stagiaire", "Matériel"];
-  const [listeProcedures, setListeProcedures] = React.useState([]);
+  const [listeProcedures, setListeProcedures] = React.useState([{id: 12, nom: "Rapport Proco", groupe: "Stagiaire"}]);
   const [filter, setFilter] = React.useState("Stagiaire");
   const [q, setQ] = React.useState("");
+  const [afficherBin, setAfficherBin] = React.useState('none');
+  const [count, setCount] = React.useState(0);
+  const [textSuppr, setTextSuppr] = React.useState("Supprimer");
   
 
-  const fetchData = async () => {
+  const toggleAffichage = () => {
+    setCount(count + 1);
+
+    if(count%2 == 0){
+      setAfficherBin('block');
+      setTextSuppr("Terminer");
+    }else{
+      setAfficherBin('none');
+      setTextSuppr("Supprimer");
+    }
+  }
+
+  const handleSupprProcedure = async (procedure) => {
     try{
-      const myData = await props.data('/services', 'get')
-      setListeProcedures(myData)
+      //await props.data(`/delete/${procedure._id}`, 'post');
     }catch(e){
       console.log(e);
     }
   }
 
-  
-  fetchData();
 
+  const boutonsAdmin = (props.user.admin) ? (
+    <div className="BoutonsModifs">
+      <Button onClick={() => {if(props.user.admin){/*props.setActiveSection(6)*/}else{alert("Vous n'avez pas la permission.")} } } sx={{my: 2, ml: 2, border: '1px solid #fff1', bgcolor: '#fff2', backdropFilter: 'blur(4px)', color: '#fff', boxShadow: 2, '&:hover': {border: '1px solid #fff1', bgcolor: '#fff1', color: '#fff'}}} variant="outlined">Ajouter une procédure</Button>
+      <Button onClick={() => {if(props.user.admin){toggleAffichage()}else{alert("Vous n'avez pas la permission.")} } } sx={{my: 2, ml: 2, border: '1px solid #fff1', bgcolor: '#fff2', backdropFilter: 'blur(4px)', color: '#fff', boxShadow: 2, '&:hover': {border: '1px solid #fff1', bgcolor: '#fff1', color: '#fff'}}} variant="outlined">{textSuppr}</Button>
+    </div>
+  ) : null;
   
   return (   
     <div className="container">
@@ -39,14 +58,16 @@ function Procedures(props) {
           <CustomizedMenus id={1} filter={filter} setFilter={setFilter} />
           <SearchBar placeH="Procédure" q={q} setQ={setQ}/>
         </Box>
+        {boutonsAdmin}
         
         <div className="listeProcedures">
           {listeProcedures.map((p) => {
             if(p.groupe === filter && (q === "" || p.nom.toLowerCase().includes(q.toLowerCase()) ) ){
             return (
-            <a href={p.lien} target="_blank" rel="noopener noreferrer">
-              <ModuleCard key={p._id} text={p.nom.toUpperCase()} style="flex-end" fontsize={15} />
-            </a>
+              <div className="procedureContainer">
+                <ModuleCard key={p._id} text={p.nom.toUpperCase()} style="flex-end" fontsize={15} />
+                <Button sx={{ position: 'absolute', top: '25px', right: '10px', display: `${afficherBin}` }} onClick={() => handleSupprProcedure(s)} className="deleteFav"><img src={bin} alt="" /></Button>
+              </div>
             )}
           })}
         </div>

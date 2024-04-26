@@ -89,6 +89,26 @@ app.post('/newService', async (req, res) => {
 	}
 })
 
+app.post('/delete/:id', async (req, res) =>{
+	const { id } = req.params;
+	try{
+		const service = await Service.findOne({_id: id});
+		const users = await User.find();
+		for(let user of users){
+			const isIn = user.favoris.some(f => f.nom.toLowerCase() === service.nom.toLowerCase());
+			if (isIn){
+				const favorisAEnlever = user.favoris.find(f => f.nom.toLowerCase() === service.nom.toLowerCase());
+				await User.findOneAndUpdate(user, {$pull: { favoris: { nom: favorisAEnlever.nom } }})
+			}
+		}
+		await Service.deleteOne({_id: id});
+		res.send(true)
+	}catch(e){
+		res.send("Une erreur est survenue")
+		res.send(e)
+	}
+})
+
 
 
 app.listen(8080, () => {
