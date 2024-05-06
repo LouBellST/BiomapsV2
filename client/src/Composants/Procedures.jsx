@@ -1,4 +1,5 @@
 import * as React from 'react'
+
 import '../style/procedures.css'
 
 import CustomizedMenus from './Groupes'
@@ -8,19 +9,19 @@ import SearchBar from './SearchBar'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-import pdf from '../ressources/Rapport_proco.pdf'
 import bin from '../ressources/bin.png'
+
+import axios from 'axios';
 
 function Procedures(props) {
 
   const listeFilters = ["Stagiaire", "Matériel"];
-  const [listeProcedures, setListeProcedures] = React.useState([{id: 12, nom: "Rapport Proco", groupe: "Stagiaire"}]);
+  const [listeProcedures, setListeProcedures] = React.useState([]);
   const [filter, setFilter] = React.useState("Stagiaire");
   const [q, setQ] = React.useState("");
   const [afficherBin, setAfficherBin] = React.useState('none');
   const [count, setCount] = React.useState(0);
   const [textSuppr, setTextSuppr] = React.useState("Supprimer");
-  
 
   const toggleAffichage = () => {
     setCount(count + 1);
@@ -34,18 +35,40 @@ function Procedures(props) {
     }
   }
 
-  const handleSupprProcedure = async (procedure) => {
+
+  const handleSupprProcedure = async (p) => {
     try{
-      //await props.data(`/delete/${procedure._id}`, 'post');
+      //await props.data(`/delete/${service._id}`, 'post');
     }catch(e){
       console.log(e);
     }
   }
 
+  const fecthData = async () => {
+    try{
+      const proceduresStored = await axios.get('http://localhost:8080/directories');
+      setListeProcedures(proceduresStored.data);
+    } catch(e){
+      console.log(e);
+    }
+  }
 
+  const handleEnterDir = async (path) => {
+    try{
+      console.log(path);
+      const listeRes = await axios.get('http://localhost:8080/procedures', { dirname: path });
+      console.log(listeRes);
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+  fecthData();
+
+  
   const boutonsAdmin = (props.user.admin) ? (
     <div className="BoutonsModifs">
-      <Button onClick={() => {if(props.user.admin){/*props.setActiveSection(6)*/}else{alert("Vous n'avez pas la permission.")} } } sx={{my: 2, ml: 2, border: '1px solid #fff1', bgcolor: '#fff2', backdropFilter: 'blur(4px)', color: '#fff', boxShadow: 2, '&:hover': {border: '1px solid #fff1', bgcolor: '#fff1', color: '#fff'}}} variant="outlined">Ajouter une procédure</Button>
+      <Button onClick={() => {if(props.user.admin){props.setActiveSection(6)}else{alert("Vous n'avez pas la permission.")} } } sx={{my: 2, ml: 2, border: '1px solid #fff1', bgcolor: '#fff2', backdropFilter: 'blur(4px)', color: '#fff', boxShadow: 2, '&:hover': {border: '1px solid #fff1', bgcolor: '#fff1', color: '#fff'}}} variant="outlined">Ajouter un service</Button>
       <Button onClick={() => {if(props.user.admin){toggleAffichage()}else{alert("Vous n'avez pas la permission.")} } } sx={{my: 2, ml: 2, border: '1px solid #fff1', bgcolor: '#fff2', backdropFilter: 'blur(4px)', color: '#fff', boxShadow: 2, '&:hover': {border: '1px solid #fff1', bgcolor: '#fff1', color: '#fff'}}} variant="outlined">{textSuppr}</Button>
     </div>
   ) : null;
@@ -61,16 +84,19 @@ function Procedures(props) {
         {boutonsAdmin}
         
         <div className="listeProcedures">
-          {listeProcedures.map((p) => {
-            if(p.groupe === filter && (q === "" || p.nom.toLowerCase().includes(q.toLowerCase()) ) ){
+          {listeProcedures.map((p, index) => {
+            if((q === "" || p.nom.toLowerCase().includes(q.toLowerCase()) ) ){
             return (
               <div className="procedureContainer">
-                <ModuleCard key={p._id} text={p.nom.toUpperCase()} style="flex-end" fontsize={15} />
-                <Button sx={{ position: 'absolute', top: '25px', right: '10px', display: `${afficherBin}` }} onClick={() => handleSupprProcedure(s)} className="deleteFav"><img src={bin} alt="" /></Button>
+                <a onClick={(e) => {console.log("dsfds"); e.preventDefault(); handleEnterDir(p.nom)}} type="application/pdf" target="_blank" rel="noopener noreferrer">
+                  <ModuleCard key={index} text={p.nom.toUpperCase()} style="flex-end" fontsize={12} />
+                </a>
+                <Button sx={{ position: 'absolute', top: '25px', right: '10px', display: `${afficherBin}` }} onClick={() => handleSupprProcedure(p)} className="deleteFav"><img src={bin} alt="" /></Button>   
               </div>
             )}
           })}
         </div>
+
 
       </div>   
     </div> 

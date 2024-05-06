@@ -2,6 +2,10 @@ const express = require('express');
 const app = express()
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
+const fs = require('fs');
+
+
 const { serviceSchema, userSchema, infoSchema } = require('./Schemas.js')
 
 app.use(express.urlencoded({ extended: false }));
@@ -22,10 +26,12 @@ const User = mongoose.model('User', userSchema);
 const Info = mongoose.model('Info', infoSchema);
 
 
+
 app.get('/user/:userMail', async (req, res) => {
 	const { userMail } = req.params;
 	const user = await User.findOne({mail: userMail})
 	res.send(user);
+
 })
 
 app.get('/services', async (req, res) => {
@@ -37,6 +43,32 @@ app.get('/services', async (req, res) => {
 app.get('/infos', async (req, res) => {
 	const information = await Info.find();
 	res.send(information)
+})
+
+app.get('/directories', async (req, res) => {
+	const dirPath = path.join(__dirname, '../client/procedures/');
+	const files = fs.readdirSync(dirPath).map((name) => {
+		return {
+			nom: name,
+			lien: `/procedures/${name}`,
+		};
+	});
+
+	res.send(files);	
+})
+
+app.get('/procedures', async (req, res) => {
+	const { dirname } = req.body;
+	console.log(dirname);
+	const dirPath = path.join(__dirname, `../client/procedures/${dirname}`);
+	const files = fs.readdirSync(dirPath).map((name) => {
+		return {
+			nom: name,
+			lien: `/procedures/${dirname}/${name}`,
+		};
+	});
+
+	res.send(files);	
 })
 
 

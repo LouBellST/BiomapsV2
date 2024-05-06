@@ -13,10 +13,11 @@ import AjoutService from './AjoutService';
 
 // wrap les differents elements globaux
 function InterfacePrincipale(props) {
+  const [procedure, setProcedure] = useState(null)
 
   const ecrans = [<Accueil user={props.user} data={props.data}/>,
   <Modules user={props.user} data={props.data} setActiveSection={props.setActiveSection}/>, 
-  <Procedures user={props.user} data={props.data} setActiveSection={props.setActiveSection} />, 
+  <Procedures setProcedure={setProcedure} user={props.user} data={props.data} setActiveSection={props.setActiveSection} />, 
   <Profil user={props.user} setActiveSection={props.setActiveSection} data={props.data} />, 
   <Theme setBg={props.setBg} bgUser={props.bgUser} setBgUser={props.setBgUser} data={props.data} />, 
   <Login data={props.data} setUser={props.setUser} setActiveSection={props.setActiveSection} setIsConnected={props.setIsConnected} setShowDrawer={props.setShowDrawer} setShowNav={props.setShowNav} setBg={props.setBg} />,

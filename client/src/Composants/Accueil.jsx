@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useEffect } from 'react'
 import '../style/accueil.css'
 
 import ModuleCard from './ModuleCard'
@@ -80,7 +79,7 @@ function Accueil(props) {
 
 
   
-  useEffect(() => {
+  React.useEffect(() => {
     fetchData();
   }, [count])
   

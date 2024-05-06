@@ -48,7 +48,7 @@ function Login(props) {
 
   return (   
       <div className="overlayLogin">
-        <Box className="loginCard" sx={{ backgroundAttachment: 'fixed', overflowY: 'scroll', boxShadow: 20, bgcolor: '#fff2', backdropFilter: 'blur(5px)', position: 'relative' }}>
+        <Box className="loginCard" sx={{ boxShadow: 20, bgcolor: '#fff2', backdropFilter: 'blur(5px)', position: 'relative' }}>
 
           <form className="loginForm" action="">
             <Typography sx={{mx: 'auto', mb: 2 }} variant="h4" component="div">Se connecter</Typography>
