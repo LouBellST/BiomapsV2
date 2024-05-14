@@ -1,15 +1,8 @@
-import { useState } from 'react'
-import '../style/theme.css'
-
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-import oiseauPetit from '../ressources/oiseauPetit.jpg'
-import backgroundPetit from '../ressources/backgroundPetit.jpg'
-import collinePetit from '../ressources/collinePetit.jpg'
-import paysagePetit from '../ressources/paysagePetit.jpg'
-import vaguePetit from '../ressources/vaguePetit.jpg'
-import saclayPetit from '../ressources/saclayPetit.jpg'
+import '../style/theme.css'
+
 
 
 function Theme(props) {

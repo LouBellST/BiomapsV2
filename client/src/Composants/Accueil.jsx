@@ -1,28 +1,24 @@
 import * as React from 'react'
-import '../style/accueil.css'
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
 
+import '../style/accueil.css'
 import ModuleCard from './ModuleCard'
 import InfoCard from './Card'
 import SearchBar from './SearchBar'
-
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import Button from '@mui/material/Button';
-
-
 import bin from '../ressources/bin.png'
 
 
 function Accueil(props) {
 
   const [listeServices, setListeServices] = React.useState([]);
-  const [q, setQ] = React.useState("");
-  const [open, setOpen] = React.useState(false);
-  const [count, setCount] = React.useState(2);
-  const [modifierIcons, setModifierIcons] = React.useState('none');
-  const [toggleCount, setToggleCount] = React.useState(1);
-  const [toggleCountInput, setToggleCountInput] = React.useState(1);
+  const [q, setQ] = React.useState("");   // query de la barre de recherche d'ajout de favoris
+  const [open, setOpen] = React.useState(false);  // drawer
+  const [count, setCount] = React.useState(2);  // pour ralentir les refresh avec useEffect
+  const [modifierIcons, setModifierIcons] = React.useState('none');  // icone de loupe qui s'affiche ou non quand on clique dessus
+  const [toggleCount, setToggleCount] = React.useState(1);  // toggle pour afficher et masquer les icones de modification (bin et edit logo) 
+  const [toggleCountInput, setToggleCountInput] = React.useState(1);  // toggle a passer dans l'info card pour toggle l'affichage de l'input pour entrer un nouveau message d'info
   const [modifierText, setModifierText] = React.useState('Modifier');
   const [listeFavoris, setListeFavoris] = React.useState([]);
 

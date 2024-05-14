@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import '../style/profil.css'
-import Avatar from '@mui/material/Avatar';
 
 
 function Profil(props) {

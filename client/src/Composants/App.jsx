@@ -1,13 +1,11 @@
 import { useState } from 'react'
 
-import axios from 'axios';
-
 import '../style/App.css'
-
 import DrawerAppBar from './Navbar'
 import InterfacePrincipale from './InterfacePrincipale'
-
 import paysage from '../ressources/paysagePetit.jpg'
+
+import axios from 'axios';
 
 function App() {
 

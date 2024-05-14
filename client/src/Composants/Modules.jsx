@@ -1,14 +1,11 @@
 import * as React from 'react'
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import '../style/modules.css'
-
 import CustomizedMenus from './Groupes'
 import ModuleCard from './ModuleCard'
 import SearchBar from './SearchBar'
-
 import bin from '../ressources/bin.png'
 
 

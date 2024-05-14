@@ -45,26 +45,12 @@ app.get('/infos', async (req, res) => {
 	res.send(information)
 })
 
-app.get('/directories', async (req, res) => {
+app.get('/procedures', async (req, res) => {
 	const dirPath = path.join(__dirname, '../client/procedures/');
 	const files = fs.readdirSync(dirPath).map((name) => {
 		return {
-			nom: name,
+			nom: name.replace(".pdf", ""),
 			lien: `/procedures/${name}`,
-		};
-	});
-
-	res.send(files);	
-})
-
-app.get('/procedures', async (req, res) => {
-	const { dirname } = req.body;
-	console.log(dirname);
-	const dirPath = path.join(__dirname, `../client/procedures/${dirname}`);
-	const files = fs.readdirSync(dirPath).map((name) => {
-		return {
-			nom: name,
-			lien: `/procedures/${dirname}/${name}`,
 		};
 	});
 

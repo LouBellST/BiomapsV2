@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect } from 'react'
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -19,15 +18,11 @@ import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { redirect } from "react-router-dom";
+
 
 import '../style/App.css'
-
 import logo from '../ressources/BiomapsLogo.png'
 import searchLogo from '../ressources/search.png'
-import { inputAdornmentClasses } from '@mui/material';
 
 const drawerWidth = 240;
 const navItems = ['Accueil', 'Services', 'Procédures'];

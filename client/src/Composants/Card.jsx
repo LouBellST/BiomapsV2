@@ -3,8 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions, TextField } from '@mui/material';
-import Textarea from '@mui/material/TextField';
+import { Button, CardActionArea } from '@mui/material';
 
 import infoLogo from '../ressources/info.png'
 import edit from '../ressources/edit.png'
@@ -55,7 +54,7 @@ export default function InfoCard(props) {
 
 
   return (
-    <Card sx={{ position: 'relative', boxShadow: 3, border: 'solid 0.5px #fff2', bgcolor: '#fff3', backdropFilter: 'blur(5px)', color: 'white', maxWidth: 345, borderRadius: 2, mx: 10, maxHeight: 340, minWidth: 280}} >
+    <Card sx={{ position: 'relative', boxShadow: 3, border: 'solid 0.5px #fff2', bgcolor: '#fff3', backdropFilter: 'blur(5px)', color: 'white', maxWidth: 345, borderRadius: 2, mx: 10, maxHeight: 340, minWidth: 350}} >
       {boutonAdmin}
       <CardActionArea>
         <CardMedia

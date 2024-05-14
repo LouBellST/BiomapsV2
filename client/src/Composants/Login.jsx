@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import Box from '@mui/material/Box';
-import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 
 import '../style/login.css'
-
 import paysage from '../ressources/paysagePetit.jpg'
 
 import axios from 'axios';

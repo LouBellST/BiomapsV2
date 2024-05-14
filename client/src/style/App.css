@@ -72,6 +72,8 @@ top: 40px;
 .logoTitle{
 	margin: auto 10px;
 	font-size: 30px;
+	font-family: "Poppins", sans-serif;
+	font-weight: 400;
 }
 
 .logoImageDrawer{

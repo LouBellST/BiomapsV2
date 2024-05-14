@@ -46,22 +46,13 @@ function Procedures(props) {
 
   const fecthData = async () => {
     try{
-      const proceduresStored = await axios.get('http://localhost:8080/directories');
+      const proceduresStored = await axios.get('http://localhost:8080/procedures');
       setListeProcedures(proceduresStored.data);
     } catch(e){
       console.log(e);
     }
   }
-
-  const handleEnterDir = async (path) => {
-    try{
-      console.log(path);
-      const listeRes = await axios.get('http://localhost:8080/procedures', { dirname: path });
-      console.log(listeRes);
-    }catch(e){
-      console.log(e)
-    }
-  }
+  
 
   fecthData();
 
@@ -88,7 +79,7 @@ function Procedures(props) {
             if((q === "" || p.nom.toLowerCase().includes(q.toLowerCase()) ) ){
             return (
               <div className="procedureContainer">
-                <a onClick={(e) => {console.log("dsfds"); e.preventDefault(); handleEnterDir(p.nom)}} type="application/pdf" target="_blank" rel="noopener noreferrer">
+                <a href={p.lien} type="application/pdf" target="_blank" rel="noopener noreferrer">
                   <ModuleCard key={index} text={p.nom.toUpperCase()} style="flex-end" fontsize={12} />
                 </a>
                 <Button sx={{ position: 'absolute', top: '25px', right: '10px', display: `${afficherBin}` }} onClick={() => handleSupprProcedure(p)} className="deleteFav"><img src={bin} alt="" /></Button>   

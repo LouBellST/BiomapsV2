@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Box from '@mui/material/Box';
 
 import '../style/interface_principale.css'
-
 import Accueil from './Accueil'
 import Modules from './Modules'
 import Procedures from './Procedures'
