@@ -54,7 +54,7 @@ export default function InfoCard(props) {
 
 
   return (
-    <Card sx={{ position: 'relative', boxShadow: 3, border: 'solid 0.5px #fff2', bgcolor: '#fff3', backdropFilter: 'blur(5px)', color: 'white', maxWidth: 345, borderRadius: 2, mx: 10, maxHeight: 340, minWidth: 350}} >
+    <Card sx={{ position: 'relative', boxShadow: 3, border: 'solid 0.5px #fff2', bgcolor: '#fff3', backdropFilter: 'blur(5px)', color: 'white', maxWidth: 345, borderRadius: 2, mx: 10, maxHeight: 400, minWidth: 350}} >
       {boutonAdmin}
       <CardActionArea>
         <CardMedia
